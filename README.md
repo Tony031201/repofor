@@ -15,3 +15,5 @@ Currently learning: Recognize letters to assemble instructions, such as ‘print
 
 This file contains the application of multi-threading. In C language, the use of multi-threading to simulate the mobilization of trains at a railway station is implemented. This file involves the use of mutex locks and signals.
 
+## csc230：
+This folder contains all assignments for my csc230 course at uvic. This is about the assembly language of ATmega2560. The time is from May to August 2023.
