@@ -7,7 +7,7 @@ The Process folder is for experiments and applications of multi-process C langua
 
 ## scanner:
 
-scanner folder: I am trying to learn how to write a compiler. The scanner folder contains the scanner part of the compiler. Currently, it has been able to identify numbers and operators. By borrowing from the Pratt parser, it uses a bifurcated tree to store numbers reasonably. and operator. Currently has and has the ability to traverse a forked tree to compute the results of numbers stored in the forked tree. Inputs outside of numbers and operators are recognized and returned as stderr.
+scanner folder: I am trying to learn how to write a compiler. The scanner folder contains the scanner part of the compiler. Currently, it has been able to identify numbers and operators. By borrowing from the Pratt parser, it uses a bifurcated tree to store numbers reasonably. and operator. Currently has and can traverse a forked tree to compute the results of numbers stored in the forked tree. Inputs outside of numbers and operators are recognized and returned as stderr.
 
 Currently learning: Recognize letters to assemble instructions, such as ‘print’
 
@@ -35,4 +35,7 @@ This is a tool I wrote using Python to crawl product information from the Amazon
 Functions that have been implemented: Capture data and store it in CSV format.
 
 Functions that have not yet been implemented but are planned: Create statistical charts for the captured data to intuitively understand the data.
+
+## csc360:
+The folder contains three assignments of csc360 in the uvic course. p1 is a multi-process application. p2 is a multi-threaded application. p3 is about the application of the file system (img file).
 
