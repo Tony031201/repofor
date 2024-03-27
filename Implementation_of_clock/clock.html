@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>clockset</title>
+<style>
+	body{
+		background-image:url('https://bpic.588ku.com/back_list_pic/21/05/26/bd106c98ee973573e4a077b87a21ed1e.jpg!/fw/640/quality/90/unsharp/true/compress/true');
+		background-repeat:repeat-Y;
+		background-attachment:fixed;
+	}
+	#clock{
+		position:absolute;
+		top:200px;
+		left:250px;
+		color:white;
+		font-style:BOLD;
+		font-size:50px;
+		border-style:ridge;
+		border-color:grey;
+		border-width:4px;
+		padding: 5px;
+		border-radius: 25px;
+		animation:myfirst 5s infinite;
+	}
+
+	#DAY{
+		position:absolute;
+		top:285px;
+		left:280px;
+		color:white;
+		font-style:ITALIC;
+		font-size:20px;
+	}
+
+@keyframes myfirst
+{
+	0%   {color:white;}
+	12.5%  {color:silver;}
+	37.5%  {color:white;}
+	62.5%  {color:silver;}
+	87.5% {color:white;}
+	100% {color:white;}
+}
+</style>
+
+<script>
+function getTime(){
+	var now = new Date();
+	var hour = now.getHours();
+	var min = now.getMinutes();
+	var second = now.getSeconds();
+	min=checkTime(min);
+	second=checkTime(second);
+	document.getElementById("clock").innerHTML=hour+":"+min+":"+second;
+	day();
+	t=setTimeout(function(){getTime()},500);
+}
+
+function checkTime(x){
+	if(x<10){
+		x = "0" + x;
+	}
+	return x;
+}
+
+function day(){
+	var d = new Date();
+	var weekday=new Array(7);
+	weekday[0]="Sun";
+	weekday[1]="Mon";
+	weekday[2]="Tue";
+	weekday[3]="Wed";
+	weekday[4]="Thu";
+	weekday[5]="Fri";
+	weekday[6]="Sat";
+
+	var mon=new Array(12);
+	mon[0]="Jan";
+	mon[1]="Feb";
+	mon[2]="Mar";
+	mon[3]="Apr";
+	mon[4]="May";
+	mon[5]="Jun";
+	mon[6]="Jul";
+	mon[7]="Aug";
+	mon[8]="Sep";
+	mon[9]="Oct";
+	mon[10]="Nov";
+	mon[11]="Dec";
+
+	var x = document.getElementById("DAY");
+	x.innerHTML=d.getFullYear() + ". "+ mon[d.getMonth()] + ". " + weekday[d.getDay()];
+}
+</script>
+</head>
+<body onload="getTime()">
+
+<canvas id="canvas" width="600" height="800"></canvas>
+<div id="clock"></div>
+<div id="DAY"></div>
+
+<script language="javascript">
+
+
+var Canvas = {
+
+//属性
+    Context:document.getElementById("canvas").getContext('2d'),
+
+//擦除
+    Clear:function(){
+
+        var cxt = Canvas.Context;
+        var width = cxt.canvas.width;
+        var height =  cxt.canvas.height;;
+        this.Context.clearRect(0,0, width, height);
+    },
+    //radius钟表半径,sencondScaleWidth刻度长度，secondHandWidth秒针长度
+    CreateClock:function(radius,sencondScaleWidth,secondHandWidth){
+        var me = this;
+        var radius = radius;
+        var sencondScaleWidth = sencondScaleWidth;
+        var secondHandWidth = secondHandWidth;
+        //小时刻度
+        var hourScaleWidth = sencondScaleWidth*2;
+        //时针分针长度
+        var hourHandWidth = secondHandWidth*80/130;
+        //分针长度
+        var minuteHandWidth = secondHandWidth*90/110;
+        //确定圆心坐标
+        var point = {x:327,y:550};
+        var ctx = this.Context;//获取上下文
+        //绘制圆圈
+
+        function drawCircle(){
+
+            ctx.save();//记录画笔状态
+            //确定画笔的位置在圆心点
+            ctx.translate(point.x,point.y);
+            //ctx.fillStyle = "black";
+            ctx.strokeStyle="gray";
+            ctx.lineWidth = 2;
+            ctx.beginPath();//开始绘制路径
+            ctx.arc(0,0,radius,0,Math.PI*2);
+            ctx.closePath();//关闭路径
+            ctx.stroke();//绘制
+            ctx.restore();//复位
+
+
+        }
+        //绘制刻度
+        function drawScale(){
+            ctx.save();//记录画笔状态
+            var perHourRadian = Math.PI/6;
+            var perMinuteRadian = Math.PI/30;
+            //确定画笔的位置在圆心点
+            ctx.translate(point.x,point.y);
+            ctx.strokeStyle="gray";
+
+            //此处为了省事，只在表盘上简单的写了几个时间数字
+            ctx.font = "bold 30px impack"
+            var dc = radius-hourScaleWidth-30;
+			ctx.font="30px Verdana";
+            ctx.fillText("12", -15, -dc);
+            ctx.stroke();
+
+            for(var i=0;i<12;i++){
+                //坐标旋转
+                ctx.rotate(perHourRadian);
+                ctx.moveTo(radius-hourScaleWidth,0);
+                ctx.lineTo(radius,0);
+            }
+
+            for(var i=0;i<60;i++){
+                //坐标旋转
+                ctx.rotate(perMinuteRadian);
+                ctx.moveTo(radius-sencondScaleWidth,0);
+                ctx.lineTo(radius,0);
+            }
+
+            ctx.stroke();//绘制
+            ctx.restore();
+
+            //radian
+        }
+        //drawScale();
+        function drawHand(){
+
+            var myDate = new Date();
+            var curHour = myDate.getHours();
+            var curMinute = myDate.getMinutes();
+            var curSecond = myDate.getSeconds();
+
+            //绘制时针
+            curHour = curHour>12?curHour-12:curHour;
+            var hourRadian = (curHour+curMinute/60+curSecond/3600) * (Math.PI/6);
+            //绘制分针
+            var minuteRadian = (curMinute+curSecond/60) * (Math.PI/30);
+            //绘制秒针
+            var secondRadian = curSecond * (Math.PI/30);
+
+            function run(radian,width,color){
+                ctx.save();
+                ctx.translate(point.x,point.y);
+                ctx.rotate(-Math.PI/2);
+                ctx.strokeStyle=color
+                ctx.beginPath();
+                ctx.rotate(radian);
+                ctx.moveTo(0,0);
+                ctx.lineTo(width,0);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+            }
+            run(hourRadian,hourHandWidth,"red");
+            run(minuteRadian,minuteHandWidth,"white");
+            run(secondRadian,secondHandWidth,"white");
+
+
+        }
+        //drawHand();
+        function drawAll(){
+            me.Clear();
+            drawCircle();
+            drawScale();
+            drawHand();
+        }
+        setInterval(drawAll,1000);
+
+
+
+
+    }
+
+};
+
+
+
+
+
+
+Canvas.CreateClock(100,15,60);
+
+</script>
+</body>
+</html>

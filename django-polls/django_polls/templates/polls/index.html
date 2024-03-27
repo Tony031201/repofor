@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
+{% if latest_question_list %}
+<! 这是一个django模板标签，用于检查'latest_question_list'是否存在或是否为真。如果存在且不为空，那么下面的代码块将被执行-->
+    <ul>
+        {% for question in latest_question_list %}
+            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
