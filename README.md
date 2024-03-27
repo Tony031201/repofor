@@ -39,3 +39,11 @@ Functions that have not yet been implemented but are planned: Create statistical
 ## csc360:
 The folder contains three assignments of csc360 in the uvic course. p1 is a multi-process application. p2 is a multi-threaded application. p3 is about the application of the file system (img file).
 
+## ChineseChest:
+Applications of object-oriented programming. A game based on traditional Chinese chess developed using the pygame package and this technology.
+
+## Implementation_of_clock:
+Simple front-end web rendering.
+
+## django-m_web-0.1.tar.gz:
+Build a publishing platform. Used front-end and back-end development technology (Django). Functions include publishing files, downloading files, user authentication, user comments, web page rendering, and database update and maintenance.
