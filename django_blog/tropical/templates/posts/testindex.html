@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+        <!--================Post Slider Area =================-->
+        <section class="post_slider_area">
+			<div class="post_slider_inner owl-carousel">
+                {% for post in slider_posts %}
+				<div class="item">
+					<div class="post_s_item">
+						<div class="post_img">
+							<img src="{{ post.image.url }}" alt="">
+						</div>
+						<div class="post_text">
+                            {% for tag in post.tag.all %}
+							<a class="cat" href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.title }}</a>
+                            {% endfor %}
+							<a href="{% url 'detail' pk=post.pk slug=post.slug %}"><h4>{{ post.title }}</h4></a>
+							<p>{{ post.content|truncatechars:150 }}</p>
+							<div class="date">
+								<a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.publishing_date }}</a>
+								<a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> {{ post.comment_count }}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+        </section>
+        <!--================End Post Slider Area =================-->
+
+        <!--================Blog Area =================-->
+    <style>
+    .blog_area.p_120{
+        background-image: url('{% static 'img/bg.png' %}');
+        background-size: cover;
+        background-color: rgba(225,225,225,0);
+
+    }
+    .blog_area.p_120 p{
+        text-align: center;
+        font-size:17px;
+
+    }
+
+    </style>
+        <section class="blog_area p_120"  style="">
+            <div class="container">
+                <div >
+                    <div >
+                        <div  >
+                            <h2 style="text-align: center;font-size: 50px;font-family: 'Lucida Calligraphy'">Welcome</h2>
+                            <p>Tropical Island isn't about a singular distinctive </p>
+                            <p>    tastes, it's about diversity with a fusion of culinary </p>
+                            <p>    inspirations. Trained in several different cuisines </p>
+                            <p>    the chef & owner has the opportunities to introduce you some </p>
+                            <p>    of the best from South East Asia. At Tropical Island, you can </p>
+                             <p>   taste the combination ofThai, Malaysian, Singapore and Chinese</p>
+                            <p>    inspired dishes. Rich, spicy, exotic and full of surprises,</p>
+                             <p>   we are pleased to serve the best of what our chef &</p>
+                             <p>   owner has to offer</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+
+{% endblock %}
